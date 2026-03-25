@@ -1,0 +1,404 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+  <meta http-equiv="Content-Style-Type" content="text/css">
+  <title></title>
+  <meta name="Generator" content="Cocoa HTML Writer">
+  <meta name="CocoaVersion" content="2685.4">
+  <style type="text/css">
+    p.p1 {margin: 0.0px 0.0px 0.0px 0.0px; font: 12.0px Helvetica}
+    p.p2 {margin: 0.0px 0.0px 0.0px 0.0px; font: 12.0px Helvetica; min-height: 14.0px}
+  </style>
+</head>
+<body>
+<p class="p1">&lt;!DOCTYPE html&gt;</p>
+<p class="p1">&lt;html lang="en"&gt;</p>
+<p class="p1">&lt;head&gt;</p>
+<p class="p1">&lt;meta charset="UTF-8"&gt;</p>
+<p class="p1">&lt;meta name="viewport" content="width=device-width, initial-scale=1.0"&gt;</p>
+<p class="p1">&lt;title&gt;Market Command Centre&lt;/title&gt;</p>
+<p class="p1">&lt;style&gt;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>/* === RESET &amp; BASE === */</p>
+<p class="p1"><span class="Apple-converted-space">  </span>*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }</p>
+<p class="p1"><span class="Apple-converted-space">  </span>:root {</p>
+<p class="p1"><span class="Apple-converted-space">    </span>--bg: #0a0e17; --card: #111827; --card-hover: #1a2235;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>--border: #1e293b; --text: #e2e8f0; --muted: #94a3b8;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>--green: #22c55e; --red: #ef4444; --blue: #3b82f6;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>--gold: #f59e0b; --purple: #a78bfa; --cyan: #06b6d4;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>}</p>
+<p class="p1"><span class="Apple-converted-space">  </span>body { font-family: 'Segoe UI', system-ui, -apple-system, sans-serif; background: var(--bg); color: var(--text); min-height: 100vh; padding: 0; }</p>
+<p class="p1"><span class="Apple-converted-space">  </span>a { color: var(--blue); text-decoration: none; }</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">  </span>/* === HEADER === */</p>
+<p class="p1"><span class="Apple-converted-space">  </span>.header { display: flex; justify-content: space-between; align-items: center; padding: 16px 28px; border-bottom: 1px solid var(--border); background: linear-gradient(180deg, #0f1524 0%, var(--bg) 100%); }</p>
+<p class="p1"><span class="Apple-converted-space">  </span>.header-left { display: flex; align-items: center; gap: 16px; }</p>
+<p class="p1"><span class="Apple-converted-space">  </span>.logo { font-size: 20px; font-weight: 700; letter-spacing: 1px; }</p>
+<p class="p1"><span class="Apple-converted-space">  </span>.logo span { color: var(--blue); }</p>
+<p class="p1"><span class="Apple-converted-space">  </span>.date-badge { font-size: 12px; color: var(--muted); background: rgba(59,130,246,0.1); padding: 4px 10px; border-radius: 6px; border: 1px solid rgba(59,130,246,0.2); }</p>
+<p class="p1"><span class="Apple-converted-space">  </span>.header-right { display: flex; align-items: center; gap: 20px; }</p>
+<p class="p1"><span class="Apple-converted-space">  </span>.clock { font-size: 32px; font-weight: 700; font-variant-numeric: tabular-nums; letter-spacing: 2px; }</p>
+<p class="p1"><span class="Apple-converted-space">  </span>.clock-label { font-size: 11px; color: var(--muted); text-align: right; }</p>
+<p class="p1"><span class="Apple-converted-space">  </span>.status-dot { width: 8px; height: 8px; border-radius: 50%; background: var(--green); display: inline-block; animation: pulse 2s infinite; }</p>
+<p class="p1"><span class="Apple-converted-space">  </span>@keyframes pulse { 0%,100%{ opacity:1; } 50%{ opacity:0.4; } }</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">  </span>/* === QUOTE BAR === */</p>
+<p class="p1"><span class="Apple-converted-space">  </span>.quote-bar { text-align: center; padding: 10px 20px; font-style: italic; color: var(--muted); font-size: 13px; border-bottom: 1px solid var(--border); }</p>
+<p class="p1"><span class="Apple-converted-space">  </span>.quote-bar strong { color: var(--gold); font-style: normal; }</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">  </span>/* === API KEY BANNER === */</p>
+<p class="p1"><span class="Apple-converted-space">  </span>.api-banner { background: rgba(245,158,11,0.1); border: 1px solid rgba(245,158,11,0.3); margin: 16px 28px 0; padding: 12px 20px; border-radius: 8px; font-size: 13px; color: var(--gold); display: none; }</p>
+<p class="p1"><span class="Apple-converted-space">  </span>.api-banner a { color: var(--gold); text-decoration: underline; }</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">  </span>/* === GRID LAYOUT === */</p>
+<p class="p1"><span class="Apple-converted-space">  </span>.dashboard { padding: 20px 28px; display: flex; flex-direction: column; gap: 20px; }</p>
+<p class="p1"><span class="Apple-converted-space">  </span>.section-title { font-size: 13px; font-weight: 600; text-transform: uppercase; letter-spacing: 2px; color: var(--muted); margin-bottom: 8px; display: flex; align-items: center; gap: 8px; }</p>
+<p class="p1"><span class="Apple-converted-space">  </span>.section-title::before { content: ''; width: 3px; height: 14px; background: var(--blue); border-radius: 2px; }</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">  </span>/* === INDEX CARDS === */</p>
+<p class="p1"><span class="Apple-converted-space">  </span>.cards-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 14px; }</p>
+<p class="p1"><span class="Apple-converted-space">  </span>.card { background: var(--card); border: 1px solid var(--border); border-radius: 10px; padding: 16px; transition: background 0.2s, border-color 0.2s; position: relative; overflow: hidden; }</p>
+<p class="p1"><span class="Apple-converted-space">  </span>.card:hover { background: var(--card-hover); border-color: #2d3a50; }</p>
+<p class="p1"><span class="Apple-converted-space">  </span>.card-name { font-size: 12px; color: var(--muted); font-weight: 600; letter-spacing: 1px; text-transform: uppercase; }</p>
+<p class="p1"><span class="Apple-converted-space">  </span>.card-price { font-size: 26px; font-weight: 700; margin: 6px 0 4px; font-variant-numeric: tabular-nums; }</p>
+<p class="p1"><span class="Apple-converted-space">  </span>.card-change { font-size: 14px; font-weight: 600; }</p>
+<p class="p1"><span class="Apple-converted-space">  </span>.card-change.up { color: var(--green); }</p>
+<p class="p1"><span class="Apple-converted-space">  </span>.card-change.down { color: var(--red); }</p>
+<p class="p1"><span class="Apple-converted-space">  </span>.card-sparkline { position: absolute; bottom: 0; right: 0; opacity: 0.15; }</p>
+<p class="p1"><span class="Apple-converted-space">  </span>.card .shimmer { background: linear-gradient(90deg, transparent 0%, rgba(255,255,255,0.03) 50%, transparent 100%); position: absolute; inset: 0; animation: shimmer 2s infinite; }</p>
+<p class="p1"><span class="Apple-converted-space">  </span>@keyframes shimmer { 0%{ transform:translateX(-100%); } 100%{ transform:translateX(100%); } }</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">  </span>/* === MARKET SESSIONS === */</p>
+<p class="p1"><span class="Apple-converted-space">  </span>.sessions { display: flex; gap: 12px; flex-wrap: wrap; }</p>
+<p class="p1"><span class="Apple-converted-space">  </span>.session { background: var(--card); border: 1px solid var(--border); border-radius: 8px; padding: 10px 18px; font-size: 13px; display: flex; align-items: center; gap: 8px; }</p>
+<p class="p1"><span class="Apple-converted-space">  </span>.session-dot { width: 8px; height: 8px; border-radius: 50%; }</p>
+<p class="p1"><span class="Apple-converted-space">  </span>.session-dot.open { background: var(--green); box-shadow: 0 0 6px rgba(34,197,94,0.5); }</p>
+<p class="p1"><span class="Apple-converted-space">  </span>.session-dot.closed { background: var(--red); opacity: 0.6; }</p>
+<p class="p1"><span class="Apple-converted-space">  </span>.session-dot.pre { background: var(--gold); }</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">  </span>/* === SECTOR HEATMAP === */</p>
+<p class="p1"><span class="Apple-converted-space">  </span>.heatmap { display: grid; grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); gap: 8px; }</p>
+<p class="p1"><span class="Apple-converted-space">  </span>.heat-cell { padding: 14px 12px; border-radius: 8px; text-align: center; font-weight: 600; font-size: 13px; transition: transform 0.15s; cursor: default; }</p>
+<p class="p1"><span class="Apple-converted-space">  </span>.heat-cell:hover { transform: scale(1.04); }</p>
+<p class="p1"><span class="Apple-converted-space">  </span>.heat-cell .label { font-size: 11px; opacity: 0.85; margin-bottom: 4px; }</p>
+<p class="p1"><span class="Apple-converted-space">  </span>.heat-cell .val { font-size: 16px; }</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">  </span>/* === TICKER TAPE === */</p>
+<p class="p1"><span class="Apple-converted-space">  </span>.ticker-wrap { overflow: hidden; border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); padding: 8px 0; margin-top: 10px; }</p>
+<p class="p1"><span class="Apple-converted-space">  </span>.ticker-track { display: flex; gap: 40px; animation: scroll 30s linear infinite; white-space: nowrap; }</p>
+<p class="p1"><span class="Apple-converted-space">  </span>.ticker-item { font-size: 13px; font-weight: 500; display: flex; gap: 6px; }</p>
+<p class="p1"><span class="Apple-converted-space">  </span>.ticker-item .sym { color: var(--muted); }</p>
+<p class="p1"><span class="Apple-converted-space">  </span>@keyframes scroll { 0%{ transform:translateX(0); } 100%{ transform:translateX(-50%); } }</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">  </span>/* === FOOTER === */</p>
+<p class="p1"><span class="Apple-converted-space">  </span>.footer { text-align: center; padding: 18px; font-size: 11px; color: #475569; border-top: 1px solid var(--border); margin-top: 10px; }</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">  </span>/* === LOADING STATE === */</p>
+<p class="p1"><span class="Apple-converted-space">  </span>.loading-text { color: var(--muted); font-size: 13px; padding: 20px 0; }</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">  </span>/* === RESPONSIVE === */</p>
+<p class="p1"><span class="Apple-converted-space">  </span>@media (max-width: 768px) {</p>
+<p class="p1"><span class="Apple-converted-space">    </span>.header { flex-direction: column; gap: 10px; text-align: center; }</p>
+<p class="p1"><span class="Apple-converted-space">    </span>.clock { font-size: 24px; }</p>
+<p class="p1"><span class="Apple-converted-space">    </span>.dashboard { padding: 14px; }</p>
+<p class="p1"><span class="Apple-converted-space">    </span>.cards-grid { grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); }</p>
+<p class="p1"><span class="Apple-converted-space">  </span>}</p>
+<p class="p1">&lt;/style&gt;</p>
+<p class="p1">&lt;/head&gt;</p>
+<p class="p1">&lt;body&gt;</p>
+<p class="p2"><br></p>
+<p class="p1">&lt;!-- HEADER --&gt;</p>
+<p class="p1">&lt;div class="header"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>&lt;div class="header-left"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;div class="logo"&gt;MARKET &lt;span&gt;COMMAND CENTRE&lt;/span&gt;&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;div class="date-badge" id="dateBadge"&gt;--&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>&lt;div class="header-right"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>&lt;div class="clock" id="clock"&gt;--:--:--&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>&lt;div class="clock-label"&gt;&lt;span class="status-dot"&gt;&lt;/span&gt; &amp;nbsp;LOCAL TIME&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>&lt;/div&gt;</p>
+<p class="p1">&lt;/div&gt;</p>
+<p class="p2"><br></p>
+<p class="p1">&lt;!-- QUOTE BAR --&gt;</p>
+<p class="p1">&lt;div class="quote-bar" id="quoteBar"&gt;✦ &amp;nbsp; Loading inspiration... &amp;nbsp; ✦&lt;/div&gt;</p>
+<p class="p2"><br></p>
+<p class="p1">&lt;!-- API KEY BANNER --&gt;</p>
+<p class="p1">&lt;div class="api-banner" id="apiBanner"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>⚠️ Using demo data. For live data, set your free Finnhub API key: edit &lt;code&gt;API_KEY&lt;/code&gt; in the script. Get one at &lt;a href="https://finnhub.io" target="_blank"&gt;finnhub.io&lt;/a&gt;</p>
+<p class="p1">&lt;/div&gt;</p>
+<p class="p2"><br></p>
+<p class="p1">&lt;!-- DASHBOARD --&gt;</p>
+<p class="p1">&lt;div class="dashboard"&gt;</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">  </span>&lt;!-- MARKET SESSIONS --&gt;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>&lt;div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;div class="section-title"&gt;Market Sessions&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;div class="sessions" id="sessions"&gt;&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>&lt;/div&gt;</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">  </span>&lt;!-- MAJOR INDICES --&gt;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>&lt;div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;div class="section-title"&gt;Major Indices&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;div class="cards-grid" id="indicesGrid"&gt;&lt;div class="loading-text"&gt;Loading market data...&lt;/div&gt;&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>&lt;/div&gt;</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">  </span>&lt;!-- FOREX --&gt;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>&lt;div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;div class="section-title"&gt;Forex&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;div class="cards-grid" id="forexGrid"&gt;&lt;div class="loading-text"&gt;Loading forex data...&lt;/div&gt;&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>&lt;/div&gt;</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">  </span>&lt;!-- CRYPTO --&gt;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>&lt;div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;div class="section-title"&gt;Crypto&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;div class="cards-grid" id="cryptoGrid"&gt;&lt;div class="loading-text"&gt;Loading crypto data...&lt;/div&gt;&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>&lt;/div&gt;</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">  </span>&lt;!-- SECTOR PERFORMANCE --&gt;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>&lt;div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;div class="section-title"&gt;Sector Performance&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;div class="heatmap" id="heatmap"&gt;&lt;div class="loading-text"&gt;Loading sectors...&lt;/div&gt;&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>&lt;/div&gt;</p>
+<p class="p1">&lt;/div&gt;</p>
+<p class="p2"><br></p>
+<p class="p1">&lt;!-- TICKER TAPE --&gt;</p>
+<p class="p1">&lt;div class="ticker-wrap"&gt;&lt;div class="ticker-track" id="tickerTape"&gt;&lt;/div&gt;&lt;/div&gt;</p>
+<p class="p2"><br></p>
+<p class="p1">&lt;!-- FOOTER --&gt;</p>
+<p class="p1">&lt;div class="footer"&gt;MARKET COMMAND CENTRE · Data refreshes every 60s · Built for traders who plan to win&lt;/div&gt;</p>
+<p class="p2"><br></p>
+<p class="p1">&lt;script&gt;</p>
+<p class="p1">// ============================================================</p>
+<p class="p1">// CONFIGURATION — SET YOUR FREE API KEY HERE</p>
+<p class="p1">// Get a free key at https://finnhub.io/register</p>
+<p class="p1">// ============================================================</p>
+<p class="p1">const API_KEY = 'd71ms6hr01qpd278he2gd71ms6hr01qpd278he30'; // &lt;-- paste your Finnhub API key here</p>
+<p class="p2"><br></p>
+<p class="p1">// ============================================================</p>
+<p class="p1">// DATA DEFINITIONS</p>
+<p class="p1">// ============================================================</p>
+<p class="p1">const INDICES = [</p>
+<p class="p1"><span class="Apple-converted-space">  </span>{ symbol: '^GSPC', name: 'S&amp;P 500', finnhub: 'SPY' },</p>
+<p class="p1"><span class="Apple-converted-space">  </span>{ symbol: '^IXIC', name: 'NASDAQ', finnhub: 'QQQ' },</p>
+<p class="p1"><span class="Apple-converted-space">  </span>{ symbol: '^DJI', name: 'DOW JONES', finnhub: 'DIA' },</p>
+<p class="p1"><span class="Apple-converted-space">  </span>{ symbol: '^RUT', name: 'RUSSELL 2000', finnhub: 'IWM' },</p>
+<p class="p1"><span class="Apple-converted-space">  </span>{ symbol: '^VIX', name: 'VIX', finnhub: 'UVXY' },</p>
+<p class="p1"><span class="Apple-converted-space">  </span>{ symbol: '^FTSE', name: 'FTSE 100', finnhub: 'EWU' },</p>
+<p class="p1"><span class="Apple-converted-space">  </span>{ symbol: '^N225', name: 'NIKKEI 225', finnhub: 'EWJ' },</p>
+<p class="p1"><span class="Apple-converted-space">  </span>{ symbol: '^HSI', name: 'HANG SENG', finnhub: 'EWH' },</p>
+<p class="p1">];</p>
+<p class="p2"><br></p>
+<p class="p1">const FOREX = [</p>
+<p class="p1"><span class="Apple-converted-space">  </span>{ symbol: 'OANDA:EUR_USD', name: 'EUR/USD', display: 'EUR/USD' },</p>
+<p class="p1"><span class="Apple-converted-space">  </span>{ symbol: 'OANDA:GBP_USD', name: 'GBP/USD', display: 'GBP/USD' },</p>
+<p class="p1"><span class="Apple-converted-space">  </span>{ symbol: 'OANDA:USD_JPY', name: 'USD/JPY', display: 'USD/JPY' },</p>
+<p class="p1"><span class="Apple-converted-space">  </span>{ symbol: 'OANDA:AUD_USD', name: 'AUD/USD', display: 'AUD/USD' },</p>
+<p class="p1"><span class="Apple-converted-space">  </span>{ symbol: 'OANDA:USD_CAD', name: 'USD/CAD', display: 'USD/CAD' },</p>
+<p class="p1">];</p>
+<p class="p2"><br></p>
+<p class="p1">const CRYPTO = [</p>
+<p class="p1"><span class="Apple-converted-space">  </span>{ symbol: 'BINANCE:BTCUSDT', name: 'BITCOIN', display: 'BTC' },</p>
+<p class="p1"><span class="Apple-converted-space">  </span>{ symbol: 'BINANCE:ETHUSDT', name: 'ETHEREUM', display: 'ETH' },</p>
+<p class="p1"><span class="Apple-converted-space">  </span>{ symbol: 'BINANCE:SOLUSDT', name: 'SOLANA', display: 'SOL' },</p>
+<p class="p1"><span class="Apple-converted-space">  </span>{ symbol: 'BINANCE:XRPUSDT', name: 'XRP', display: 'XRP' },</p>
+<p class="p1">];</p>
+<p class="p2"><br></p>
+<p class="p1">const SECTORS = [</p>
+<p class="p1"><span class="Apple-converted-space">  </span>{ name: 'Technology', etf: 'XLK' }, { name: 'Healthcare', etf: 'XLV' },</p>
+<p class="p1"><span class="Apple-converted-space">  </span>{ name: 'Financials', etf: 'XLF' }, { name: 'Energy', etf: 'XLE' },</p>
+<p class="p1"><span class="Apple-converted-space">  </span>{ name: 'Consumer Disc.', etf: 'XLY' }, { name: 'Industrials', etf: 'XLI' },</p>
+<p class="p1"><span class="Apple-converted-space">  </span>{ name: 'Utilities', etf: 'XLU' }, { name: 'Real Estate', etf: 'XLRE' },</p>
+<p class="p1"><span class="Apple-converted-space">  </span>{ name: 'Materials', etf: 'XLB' }, { name: 'Comm. Services', etf: 'XLC' },</p>
+<p class="p1">];</p>
+<p class="p2"><br></p>
+<p class="p1">const QUOTES = [</p>
+<p class="p1"><span class="Apple-converted-space">  </span>{ text: "If you Fail to Plan, You are Planning to Fail", author: "Benjamin Franklin" },</p>
+<p class="p1"><span class="Apple-converted-space">  </span>{ text: "The stock market is a device for transferring money from the impatient to the patient", author: "Warren Buffett" },</p>
+<p class="p1"><span class="Apple-converted-space">  </span>{ text: "Risk comes from not knowing what you're doing", author: "Warren Buffett" },</p>
+<p class="p1"><span class="Apple-converted-space">  </span>{ text: "The trend is your friend until the end when it bends", author: "Ed Seykota" },</p>
+<p class="p1"><span class="Apple-converted-space">  </span>{ text: "Cut your losses short and let your winners run", author: "Jesse Livermore" },</p>
+<p class="p1"><span class="Apple-converted-space">  </span>{ text: "Markets can stay irrational longer than you can stay solvent", author: "John Maynard Keynes" },</p>
+<p class="p1"><span class="Apple-converted-space">  </span>{ text: "The goal of a successful trader is to make the best trades. Money is secondary", author: "Alexander Elder" },</p>
+<p class="p1"><span class="Apple-converted-space">  </span>{ text: "In trading, the impossible happens about twice a year", author: "Henri M Simoes" },</p>
+<p class="p1"><span class="Apple-converted-space">  </span>{ text: "Discipline is the bridge between goals and accomplishment", author: "Jim Rohn" },</p>
+<p class="p1"><span class="Apple-converted-space">  </span>{ text: "Every battle is won before it is fought", author: "Sun Tzu" },</p>
+<p class="p1">];</p>
+<p class="p2"><br></p>
+<p class="p1">// ============================================================</p>
+<p class="p1">// CLOCK &amp; DATE</p>
+<p class="p1">// ============================================================</p>
+<p class="p1">function updateClock() {</p>
+<p class="p1"><span class="Apple-converted-space">  </span>const now = new Date();</p>
+<p class="p1"><span class="Apple-converted-space">  </span>document.getElementById('clock').textContent = now.toLocaleTimeString('en-GB', { hour12: false });</p>
+<p class="p1"><span class="Apple-converted-space">  </span>const days = ['SUN','MON','TUE','WED','THU','FRI','SAT'];</p>
+<p class="p1"><span class="Apple-converted-space">  </span>const months = ['JAN','FEB','MAR','APR','MAY','JUN','JUL','AUG','SEP','OCT','NOV','DEC'];</p>
+<p class="p1"><span class="Apple-converted-space">  </span>document.getElementById('dateBadge').textContent = `${days[now.getDay()]} · ${now.getDate()} ${months[now.getMonth()]} ${now.getFullYear()}`;</p>
+<p class="p1">}</p>
+<p class="p1">setInterval(updateClock, 1000);</p>
+<p class="p1">updateClock();</p>
+<p class="p2"><br></p>
+<p class="p1">// ============================================================</p>
+<p class="p1">// QUOTES</p>
+<p class="p1">// ============================================================</p>
+<p class="p1">function setQuote() {</p>
+<p class="p1"><span class="Apple-converted-space">  </span>const q = QUOTES[Math.floor(Math.random() * QUOTES.length)];</p>
+<p class="p1"><span class="Apple-converted-space">  </span>document.getElementById('quoteBar').innerHTML = `✦ &amp;nbsp; "${q.text}" &amp;nbsp;— &lt;strong&gt;${q.author}&lt;/strong&gt; &amp;nbsp; ✦`;</p>
+<p class="p1">}</p>
+<p class="p1">setQuote();</p>
+<p class="p1">setInterval(setQuote, 30000);</p>
+<p class="p2"><br></p>
+<p class="p1">// ============================================================</p>
+<p class="p1">// MARKET SESSIONS</p>
+<p class="p1">// ============================================================</p>
+<p class="p1">function updateSessions() {</p>
+<p class="p1"><span class="Apple-converted-space">  </span>const now = new Date();</p>
+<p class="p1"><span class="Apple-converted-space">  </span>const utcH = now.getUTCHours(), utcM = now.getUTCMinutes(), t = utcH * 60 + utcM;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>const sessions = [</p>
+<p class="p1"><span class="Apple-converted-space">    </span>{ name: 'Sydney', open: 21*60, close: 6*60, wrap: true },</p>
+<p class="p1"><span class="Apple-converted-space">    </span>{ name: 'Tokyo', open: 0*60, close: 9*60 },</p>
+<p class="p1"><span class="Apple-converted-space">    </span>{ name: 'Hong Kong', open: 1*60+30, close: 8*60 },</p>
+<p class="p1"><span class="Apple-converted-space">    </span>{ name: 'London', open: 8*60, close: 16*60+30 },</p>
+<p class="p1"><span class="Apple-converted-space">    </span>{ name: 'New York', open: 13*60+30, close: 20*60 },</p>
+<p class="p1"><span class="Apple-converted-space">  </span>];</p>
+<p class="p1"><span class="Apple-converted-space">  </span>const el = document.getElementById('sessions');</p>
+<p class="p1"><span class="Apple-converted-space">  </span>el.innerHTML = sessions.map(s =&gt; {</p>
+<p class="p1"><span class="Apple-converted-space">    </span>let isOpen;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>if (s.wrap) { isOpen = t &gt;= s.open || t &lt; s.close; }</p>
+<p class="p1"><span class="Apple-converted-space">    </span>else { isOpen = t &gt;= s.open &amp;&amp; t &lt; s.close; }</p>
+<p class="p1"><span class="Apple-converted-space">    </span>return `&lt;div class="session"&gt;&lt;span class="session-dot ${isOpen ? 'open' : 'closed'}"&gt;&lt;/span&gt;${s.name} &lt;span style="color:${isOpen ? 'var(--green)' : 'var(--muted)'};font-weight:600;font-size:11px;"&gt;${isOpen ? 'OPEN' : 'CLOSED'}&lt;/span&gt;&lt;/div&gt;`;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>}).join('');</p>
+<p class="p1">}</p>
+<p class="p1">updateSessions();</p>
+<p class="p1">setInterval(updateSessions, 60000);</p>
+<p class="p2"><br></p>
+<p class="p1">// ============================================================</p>
+<p class="p1">// DATA FETCHING (Finnhub or Demo)</p>
+<p class="p1">// ============================================================</p>
+<p class="p1">const useLive = API_KEY.length &gt; 0;</p>
+<p class="p2"><br></p>
+<p class="p1">if (!useLive) {</p>
+<p class="p1"><span class="Apple-converted-space">  </span>document.getElementById('apiBanner').style.display = 'block';</p>
+<p class="p1">}</p>
+<p class="p2"><br></p>
+<p class="p1">async function fetchQuote(symbol) {</p>
+<p class="p1"><span class="Apple-converted-space">  </span>if (!useLive) return null;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>try {</p>
+<p class="p1"><span class="Apple-converted-space">    </span>const r = await fetch(`https://finnhub.io/api/v1/quote?symbol=${symbol}&amp;token=${API_KEY}`);</p>
+<p class="p1"><span class="Apple-converted-space">    </span>const d = await r.json();</p>
+<p class="p1"><span class="Apple-converted-space">    </span>if (d.c) return { price: d.c, change: d.d, changePercent: d.dp, high: d.h, low: d.l, prevClose: d.pc };</p>
+<p class="p1"><span class="Apple-converted-space">  </span>} catch(e) { console.warn('Fetch error', symbol, e); }</p>
+<p class="p1"><span class="Apple-converted-space">  </span>return null;</p>
+<p class="p1">}</p>
+<p class="p2"><br></p>
+<p class="p1">function demoData(basePrice, volatility) {</p>
+<p class="p1"><span class="Apple-converted-space">  </span>const change = (Math.random() - 0.48) * volatility;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>const pct = (change / basePrice) * 100;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>return { price: basePrice + change, change, changePercent: pct };</p>
+<p class="p1">}</p>
+<p class="p2"><br></p>
+<p class="p1">const DEMO_PRICES = {</p>
+<p class="p1"><span class="Apple-converted-space">  </span>SPY: 565, QQQ: 485, DIA: 425, IWM: 210, UVXY: 18, EWU: 36, EWJ: 72, EWH: 22,</p>
+<p class="p1"><span class="Apple-converted-space">  </span>'EUR/USD': 1.0842, 'GBP/USD': 1.2935, 'USD/JPY': 149.52, 'AUD/USD': 0.6612, 'USD/CAD': 1.3548,</p>
+<p class="p1"><span class="Apple-converted-space">  </span>BTC: 87250, ETH: 3420, SOL: 192, XRP: 2.38,</p>
+<p class="p1"><span class="Apple-converted-space">  </span>XLK: 210, XLV: 148, XLF: 43, XLE: 88, XLY: 192, XLI: 120, XLU: 72, XLRE: 42, XLB: 85, XLC: 82,</p>
+<p class="p1">};</p>
+<p class="p2"><br></p>
+<p class="p1">// ============================================================</p>
+<p class="p1">// RENDER CARDS</p>
+<p class="p1">// ============================================================</p>
+<p class="p1">function renderCard(name, data, prefix = '') {</p>
+<p class="p1"><span class="Apple-converted-space">  </span>const isUp = data.change &gt;= 0;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>const arrow = isUp ? '▲' : '▼';</p>
+<p class="p1"><span class="Apple-converted-space">  </span>const cls = isUp ? 'up' : 'down';</p>
+<p class="p1"><span class="Apple-converted-space">  </span>const priceStr = data.price &gt; 1000 ? data.price.toLocaleString('en-US', {minimumFractionDigits:2, maximumFractionDigits:2}) :</p>
+<p class="p1"><span class="Apple-converted-space">                   </span>data.price &lt; 10 ? data.price.toFixed(4) : data.price.toFixed(2);</p>
+<p class="p1"><span class="Apple-converted-space">  </span>return `&lt;div class="card"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;div class="card-name"&gt;${prefix}${name}&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;div class="card-price"&gt;${priceStr}&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;div class="card-change ${cls}"&gt;${arrow} ${Math.abs(data.change).toFixed(2)} (${Math.abs(data.changePercent).toFixed(2)}%)&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>&lt;/div&gt;`;</p>
+<p class="p1">}</p>
+<p class="p2"><br></p>
+<p class="p1">async function loadIndices() {</p>
+<p class="p1"><span class="Apple-converted-space">  </span>const grid = document.getElementById('indicesGrid');</p>
+<p class="p1"><span class="Apple-converted-space">  </span>let html = '';</p>
+<p class="p1"><span class="Apple-converted-space">  </span>for (const idx of INDICES) {</p>
+<p class="p1"><span class="Apple-converted-space">    </span>let data = await fetchQuote(idx.finnhub);</p>
+<p class="p1"><span class="Apple-converted-space">    </span>if (!data) data = demoData(DEMO_PRICES[idx.finnhub], DEMO_PRICES[idx.finnhub] * 0.012);</p>
+<p class="p1"><span class="Apple-converted-space">    </span>html += renderCard(idx.name, data);</p>
+<p class="p1"><span class="Apple-converted-space">  </span>}</p>
+<p class="p1"><span class="Apple-converted-space">  </span>grid.innerHTML = html;</p>
+<p class="p1">}</p>
+<p class="p2"><br></p>
+<p class="p1">async function loadForex() {</p>
+<p class="p1"><span class="Apple-converted-space">  </span>const grid = document.getElementById('forexGrid');</p>
+<p class="p1"><span class="Apple-converted-space">  </span>let html = '';</p>
+<p class="p1"><span class="Apple-converted-space">  </span>for (const fx of FOREX) {</p>
+<p class="p1"><span class="Apple-converted-space">    </span>let data = await fetchQuote(fx.symbol);</p>
+<p class="p1"><span class="Apple-converted-space">    </span>if (!data) {</p>
+<p class="p1"><span class="Apple-converted-space">      </span>const bp = DEMO_PRICES[fx.display];</p>
+<p class="p1"><span class="Apple-converted-space">      </span>data = demoData(bp, bp * 0.005);</p>
+<p class="p1"><span class="Apple-converted-space">    </span>}</p>
+<p class="p1"><span class="Apple-converted-space">    </span>html += renderCard(fx.display, data);</p>
+<p class="p1"><span class="Apple-converted-space">  </span>}</p>
+<p class="p1"><span class="Apple-converted-space">  </span>grid.innerHTML = html;</p>
+<p class="p1">}</p>
+<p class="p2"><br></p>
+<p class="p1">async function loadCrypto() {</p>
+<p class="p1"><span class="Apple-converted-space">  </span>const grid = document.getElementById('cryptoGrid');</p>
+<p class="p1"><span class="Apple-converted-space">  </span>let html = '';</p>
+<p class="p1"><span class="Apple-converted-space">  </span>for (const c of CRYPTO) {</p>
+<p class="p1"><span class="Apple-converted-space">    </span>let data = await fetchQuote(c.symbol);</p>
+<p class="p1"><span class="Apple-converted-space">    </span>if (!data) data = demoData(DEMO_PRICES[c.display], DEMO_PRICES[c.display] * 0.03);</p>
+<p class="p1"><span class="Apple-converted-space">    </span>html += renderCard(c.name, data, `${c.display} · `);</p>
+<p class="p1"><span class="Apple-converted-space">  </span>}</p>
+<p class="p1"><span class="Apple-converted-space">  </span>grid.innerHTML = html;</p>
+<p class="p1">}</p>
+<p class="p2"><br></p>
+<p class="p1">async function loadSectors() {</p>
+<p class="p1"><span class="Apple-converted-space">  </span>const heatmap = document.getElementById('heatmap');</p>
+<p class="p1"><span class="Apple-converted-space">  </span>let html = '';</p>
+<p class="p1"><span class="Apple-converted-space">  </span>for (const s of SECTORS) {</p>
+<p class="p1"><span class="Apple-converted-space">    </span>let data = await fetchQuote(s.etf);</p>
+<p class="p1"><span class="Apple-converted-space">    </span>if (!data) data = demoData(DEMO_PRICES[s.etf], DEMO_PRICES[s.etf] * 0.015);</p>
+<p class="p1"><span class="Apple-converted-space">    </span>const pct = data.changePercent;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>const intensity = Math.min(Math.abs(pct) / 2, 1);</p>
+<p class="p1"><span class="Apple-converted-space">    </span>const bg = pct &gt;= 0 ? `rgba(34,197,94,${0.15 + intensity * 0.45})` : `rgba(239,68,68,${0.15 + intensity * 0.45})`;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>html += `&lt;div class="heat-cell" style="background:${bg}"&gt;&lt;div class="label"&gt;${s.name}&lt;/div&gt;&lt;div class="val"&gt;${pct &gt;= 0 ? '+' : ''}${pct.toFixed(2)}%&lt;/div&gt;&lt;/div&gt;`;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>}</p>
+<p class="p1"><span class="Apple-converted-space">  </span>heatmap.innerHTML = html;</p>
+<p class="p1">}</p>
+<p class="p2"><br></p>
+<p class="p1">function loadTicker() {</p>
+<p class="p1"><span class="Apple-converted-space">  </span>const tape = document.getElementById('tickerTape');</p>
+<p class="p1"><span class="Apple-converted-space">  </span>const items = [...INDICES, ...FOREX.map(f =&gt; ({name: f.display, finnhub: f.display})), ...CRYPTO.map(c =&gt; ({name: c.display, finnhub: c.display}))];</p>
+<p class="p1"><span class="Apple-converted-space">  </span>let html = '';</p>
+<p class="p1"><span class="Apple-converted-space">  </span>for (let rep = 0; rep &lt; 2; rep++) {</p>
+<p class="p1"><span class="Apple-converted-space">    </span>for (const item of items) {</p>
+<p class="p1"><span class="Apple-converted-space">      </span>const bp = DEMO_PRICES[item.finnhub] || 100;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>const d = demoData(bp, bp * 0.01);</p>
+<p class="p1"><span class="Apple-converted-space">      </span>const isUp = d.change &gt;= 0;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>const color = isUp ? 'var(--green)' : 'var(--red)';</p>
+<p class="p1"><span class="Apple-converted-space">      </span>const arrow = isUp ? '▲' : '▼';</p>
+<p class="p1"><span class="Apple-converted-space">      </span>html += `&lt;div class="ticker-item"&gt;&lt;span class="sym"&gt;${item.name}&lt;/span&gt; &lt;span style="color:${color}"&gt;${arrow} ${Math.abs(d.changePercent).toFixed(2)}%&lt;/span&gt;&lt;/div&gt;`;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>}</p>
+<p class="p1"><span class="Apple-converted-space">  </span>}</p>
+<p class="p1"><span class="Apple-converted-space">  </span>tape.innerHTML = html;</p>
+<p class="p1">}</p>
+<p class="p2"><br></p>
+<p class="p1">// ============================================================</p>
+<p class="p1">// INIT &amp; REFRESH</p>
+<p class="p1">// ============================================================</p>
+<p class="p1">async function loadAll() {</p>
+<p class="p1"><span class="Apple-converted-space">  </span>await Promise.all([loadIndices(), loadForex(), loadCrypto(), loadSectors()]);</p>
+<p class="p1"><span class="Apple-converted-space">  </span>loadTicker();</p>
+<p class="p1">}</p>
+<p class="p1">loadAll();</p>
+<p class="p1">setInterval(loadAll, 60000);</p>
+<p class="p1">&lt;/script&gt;</p>
+<p class="p1">&lt;/body&gt;</p>
+<p class="p1">&lt;/html&gt;</p>
+</body>
+</html>
